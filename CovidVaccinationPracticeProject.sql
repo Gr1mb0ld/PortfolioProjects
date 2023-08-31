@@ -3,11 +3,11 @@ FROM PortfolioProject..CovidDeaths
 where location = 'Upper middle income'
 order by 3,4
 
-/*
+
 SELECT *
 FROM PortfolioProject..CovidVaccination
 order by 3,4
-*/
+
 
 --Select data that we are going to be using
 
@@ -17,7 +17,7 @@ order by 1,2
 
 
 -- Looking at the Total Cases vs Total Deaths
--- shows likelihood of dying if you cintract covid in your country
+-- shows likelihood of dying if you contract covid in your country
 Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 AS DeathPercentage
 From PortfolioProject..CovidDeaths
 Where continent is not null and location = 'Hungary'
@@ -25,11 +25,10 @@ order by 1,2
 
 
 -- Looking at the Total Cases vs Population
---Shows what percentage of population got covid
+--Shows what percentage of population got covid in US
 Select location, date, total_cases, population, (total_cases/population)*100 AS PercentPopulationInfected
 From PortfolioProject..CovidDeaths
-Where continent is not null and (total_cases/population)*100 > 0.0001 and location = 'Hungary'
---Where Location like '%states%'
+Where continent is not null and (total_cases/population)*100 > 0.0001 and Location like '%states%'
 order by 1,2
 
 
@@ -38,7 +37,6 @@ order by 1,2
 Select location, population, MAX(total_cases) as HighestInfectionCount, Max((total_cases/population))*100 AS
 PercentPopulationInfected, MAX(total_deaths) MaxDeath
 From PortfolioProject..CovidDeaths
---Where Location = 'Hungary'
 Where continent is not null
 Group by location, population
 order by PercentPopulationInfected desc
