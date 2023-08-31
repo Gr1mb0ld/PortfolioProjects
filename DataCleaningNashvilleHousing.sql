@@ -1,6 +1,6 @@
 /*
 
-Cleaning Data in SQL Queries
+Cleaning NashvilleHousing Dataset
 
 */
 
@@ -12,11 +12,6 @@ from PortfolioProject..NashvilleHousing
 
 select SaleDate, CONVERT(date,SaleDate)
 from PortfolioProject..NashvilleHousing
-
-
-update PortfolioProject..NashvilleHousing
-set SaleDate = CONVERT(date, SaleDate)
----------------------------------------------------- it didn't work somehow
 
 alter table PortfolioProject..NashvilleHousing
 Add SaleDateConverted Date;
@@ -73,10 +68,8 @@ from PortfolioProject..NashvilleHousing
 
 select
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress)-1) as Address,
-SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress)+2, LEN(PropertyAddress)) as City		-- starting position after the ',' and 'space'
+SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress)+2, LEN(PropertyAddress)) as City
 from PortfolioProject..NashvilleHousing
-
--- can't separate 2 values from 1 column -> need to create new column
 
 Alter Table PortfolioProject..NashvilleHousing
 Add PropertySplitAddress Nvarchar(255);
@@ -103,7 +96,7 @@ where OwnerAddress is not null
 select 
 Parsename(replace(OwnerAddress, ',', '.'), 3),  
 Parsename(replace(OwnerAddress, ',', '.'), 2),
-Parsename(replace(OwnerAddress, ',', '.'), 1)		-- parsname ranking positions backward so 1st is last
+Parsename(replace(OwnerAddress, ',', '.'), 1)		
 from PortfolioProject..NashvilleHousing
 where OwnerAddress is not null
 
